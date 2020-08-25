@@ -1,3 +1,4 @@
+
 .MODEL SMALL
 .STACK 100H
 
@@ -5,10 +6,11 @@
  PROMPT DB 'Enter the Digit: $'
  MSG DB 'The Entered Digit is: $'
  
+
 .CODE 
- MAIN PROC 
+ MAIN PROC
     MOV AX, @DATA
-    MOV DX, AX
+    MOV DS, AX
     
     LEA DX, PROMPT
     MOV AH, 9
@@ -24,22 +26,22 @@
     INT 21H
     
     MOV DL, 0AH
-    INT 21H 
+    INT 21H
     
     LEA DX, MSG
     MOV AH, 9
     INT 21H
     
-    CMP BL, 30H   
+    CMP BL, 30H
     
     JZ @ZERO
     JG @POSITIVE
     JL @NEGATIVE
-    
-    
+                                                     ; 3---> 0<3  
+
 @ZERO:
 MOV DL, 'Z'
-JMP @PRINT 
+JMP @PRINT
 
 @POSITIVE:
 MOV DL, 'P'
@@ -47,22 +49,14 @@ JMP @PRINT
 
 @NEGATIVE:
 MOV DL, 'N'
-JMP @PRINT 
-
-
+JMP @PRINT
 
 
 @PRINT:
 MOV AH, 2
 INT 21H
-        
-        MOV AH, 4CH
-        INT 21H
-      MAIN ENDP
-      END MAIN 
-        
-
-
-
-
-
+    
+    MOV AH,4CH
+    INT 21H
+  MAIN ENDP
+ END MAIN
